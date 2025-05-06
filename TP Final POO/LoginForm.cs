@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace TP_Final_POO
 {
@@ -21,7 +22,18 @@ namespace TP_Final_POO
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            if (File.Exists("Acceso.txt"))
+            {
+                txtUsuario.Enabled = true;
+                txtContraseña.Enabled = true;
+                btnLogin.Enabled = true;
+            }
+            else
+            {
+                txtUsuario.Enabled = false;
+                txtContraseña.Enabled = false;
+                btnLogin.Enabled = false;
+            }
         }
 
         private void InicializarUsuarios()
@@ -31,6 +43,7 @@ namespace TP_Final_POO
             // Agregamos administradoras
             usuarios.Add("camila", new Usuario("Camila Aguilera", "1234", Rol.ADMIN));
             usuarios.Add("melina", new Usuario("Melina Esquivel", "1234", Rol.ADMIN));
+            usuarios.Add("magali", new Usuario("Magali Dargenzio", "1234", Rol.ADMIN));
         }
 
 
@@ -67,6 +80,12 @@ namespace TP_Final_POO
                 MessageBox.Show("Usuario no encontrado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtContraseña.Clear();
             }
+        }
+
+        private void btnRegistrarse_Click(object sender, EventArgs e)
+        {
+            RegistroForm registro = new RegistroForm(usuarios); //Abre el form de registro
+            registro.ShowDialog();
         }
     }
 
