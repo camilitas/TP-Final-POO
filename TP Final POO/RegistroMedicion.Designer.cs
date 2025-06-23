@@ -39,6 +39,7 @@
             this.btnVolver = new System.Windows.Forms.Button();
             this.numCantidadAgua = new System.Windows.Forms.NumericUpDown();
             this.dgvMediciones = new System.Windows.Forms.DataGridView();
+            this.Eliminar = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.numCantidadAgua)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMediciones)).BeginInit();
             this.SuspendLayout();
@@ -140,11 +141,21 @@
             this.dgvMediciones.AllowUserToAddRows = false;
             this.dgvMediciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvMediciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMediciones.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Eliminar});
             this.dgvMediciones.Location = new System.Drawing.Point(356, 22);
             this.dgvMediciones.Name = "dgvMediciones";
             this.dgvMediciones.ReadOnly = true;
             this.dgvMediciones.Size = new System.Drawing.Size(524, 346);
             this.dgvMediciones.TabIndex = 12;
+            this.dgvMediciones.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMediciones_CellContentClick);
+            // 
+            // Eliminar
+            // 
+            this.Eliminar.HeaderText = "Eliminar";
+            this.Eliminar.Name = "Eliminar";
+            this.Eliminar.ReadOnly = true;
+            this.Eliminar.UseColumnTextForButtonValue = true;
             // 
             // RegistroMedicion
             // 
@@ -187,5 +198,6 @@
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.NumericUpDown numCantidadAgua;
         private System.Windows.Forms.DataGridView dgvMediciones;
+        private System.Windows.Forms.DataGridViewButtonColumn Eliminar;
     }
 }

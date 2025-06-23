@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 namespace TP_Final_POO
 {
     //Define la estructura de un único registro de lluvia.
-    //propiedades de Medicion
-    public class Medicion
+
+    public class Medicion : IComparable
     {
+        public Guid Id { get; private set; }
         public string Localidad { get; set; }
         public DateTime FechaHoraMedicion { get; set; }
         public double CantidadAgua { get; set; }
@@ -20,33 +21,54 @@ namespace TP_Final_POO
         // Constructor para facilitar la creación de objetos
         public Medicion(string localidad, DateTime fechaHoraMedicion, double cantidadAgua, string responsable)
         {
+            Id = Guid.NewGuid(); // Se genera un ID único automáticamente.
             Localidad = localidad;
             FechaHoraMedicion = fechaHoraMedicion;
             CantidadAgua = cantidadAgua;
             Responsable = responsable;
-            FechaHoraRegistro = DateTime.Now; // Se asigna automáticamente al crear el registro
+            FechaHoraRegistro = DateTime.Now;
         }
+
+        private Medicion() { }
+
+         public int CompareTo(object obj)
+    {
+        // Primero, verificamos que el objeto con el que comparamos no sea nulo
+        // y que sea del tipo Medicion.
+        if (obj == null) return 1;
+
+        if (obj is Medicion otraMedicion)
+        {
+            // Esto ordenará las mediciones por fecha, de la más antigua a la más nueva.
+            return this.FechaHoraMedicion.CompareTo(otraMedicion.FechaHoraMedicion);
+        }
+        else
+        {
+            // Si intentan compararlo con algo que no es una Medicion, figura error
+            throw new ArgumentException("El objeto a comparar no es una Medicion.");
+        }
+    }
 
         // Método para convertir el objeto a texto para el CSV
         public string ToCsv()
         {
-            return $"{Localidad};{FechaHoraMedicion:O};{CantidadAgua};{Responsable};{FechaHoraRegistro:O}";
+            return $"{Id};{Localidad};{FechaHoraMedicion:O};{CantidadAgua};{Responsable};{FechaHoraRegistro:O}";
         }
 
         // Método estático para crear un objeto Medicion desde una línea de CSV
         public static Medicion FromCsv(string csvLine)
         {
             string[] values = csvLine.Split(';'); // Divide la linea en partes usando ; como separador
-            string localidad = values[0];
-            DateTime fechaHoraMedicion = DateTime.Parse(values[1]);
-            double cantidadAgua = double.Parse(values[2]);
-            string responsable = values[3];
 
-            // Creamos el objeto usando el constructor
-            Medicion medicion = new Medicion(localidad, fechaHoraMedicion, cantidadAgua, responsable);
+            Medicion medicion = new Medicion();
 
-            // Asignamos la fecha de registro que viene del archivo
-            medicion.FechaHoraRegistro = DateTime.Parse(values[4]);
+            // Asignamos las propiedades desde los valores del CSV.
+            medicion.Id = Guid.Parse(values[0]); // Leemos el ID desde el archivo.
+            medicion.Localidad = values[1];
+            medicion.FechaHoraMedicion = DateTime.Parse(values[2]);
+            medicion.CantidadAgua = double.Parse(values[3]);
+            medicion.Responsable = values[4];
+            medicion.FechaHoraRegistro = DateTime.Parse(values[5]);
 
             return medicion;
         }

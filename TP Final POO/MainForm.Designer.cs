@@ -31,9 +31,11 @@ namespace TP_Final_POO
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lblBienvenida = new System.Windows.Forms.Label();
             this.registrarNuevaMedicionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.consultarMedicionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblBienvenida = new System.Windows.Forms.Label();
+            this.adminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gestionarClientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,7 +45,8 @@ namespace TP_Final_POO
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuToolStripMenuItem,
             this.registrarNuevaMedicionToolStripMenuItem,
-            this.consultarMedicionesToolStripMenuItem});
+            this.consultarMedicionesToolStripMenuItem,
+            this.adminToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -57,16 +60,6 @@ namespace TP_Final_POO
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.menuToolStripMenuItem.Text = "Cerrar Sesión";
             this.menuToolStripMenuItem.Click += new System.EventHandler(this.menuToolStripMenuItem_Click);
-            // 
-            // lblBienvenida
-            // 
-            this.lblBienvenida.AutoSize = true;
-            this.lblBienvenida.Location = new System.Drawing.Point(20, 332);
-            this.lblBienvenida.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblBienvenida.Name = "lblBienvenida";
-            this.lblBienvenida.Size = new System.Drawing.Size(35, 13);
-            this.lblBienvenida.TabIndex = 1;
-            this.lblBienvenida.Text = "label1";
             // 
             // registrarNuevaMedicionToolStripMenuItem
             // 
@@ -82,6 +75,31 @@ namespace TP_Final_POO
             this.consultarMedicionesToolStripMenuItem.Text = "Consultar mediciones";
             this.consultarMedicionesToolStripMenuItem.Click += new System.EventHandler(this.consultarMedicionesToolStripMenuItem_Click);
             // 
+            // lblBienvenida
+            // 
+            this.lblBienvenida.AutoSize = true;
+            this.lblBienvenida.Location = new System.Drawing.Point(20, 332);
+            this.lblBienvenida.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblBienvenida.Name = "lblBienvenida";
+            this.lblBienvenida.Size = new System.Drawing.Size(35, 13);
+            this.lblBienvenida.TabIndex = 1;
+            this.lblBienvenida.Text = "label1";
+            // 
+            // adminToolStripMenuItem
+            // 
+            this.adminToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gestionarClientesToolStripMenuItem});
+            this.adminToolStripMenuItem.Name = "adminToolStripMenuItem";
+            this.adminToolStripMenuItem.Size = new System.Drawing.Size(100, 20);
+            this.adminToolStripMenuItem.Text = "Administración";
+            // 
+            // gestionarClientesToolStripMenuItem
+            // 
+            this.gestionarClientesToolStripMenuItem.Name = "gestionarClientesToolStripMenuItem";
+            this.gestionarClientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.gestionarClientesToolStripMenuItem.Text = "Gestionar Clientes";
+            this.gestionarClientesToolStripMenuItem.Click += new System.EventHandler(this.gestionarClientesToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -91,7 +109,7 @@ namespace TP_Final_POO
             this.Controls.Add(this.lblBienvenida);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -109,5 +127,7 @@ namespace TP_Final_POO
         private System.Windows.Forms.ToolStripMenuItem menuToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registrarNuevaMedicionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem consultarMedicionesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adminToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gestionarClientesToolStripMenuItem;
     }
 }

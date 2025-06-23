@@ -11,14 +11,14 @@ namespace TP_Final_POO
     //Centraliza toda la lógica de lectura y escritura del archivo Mediciones.csv
     public class GestorDeDatos
     {
-        // 'const' significa que el valor de esta variable no puede cambiar.
+        // const porque el valor de esta variable no puede cambiar.
         private const string _rutaArchivo = "Mediciones.csv";
 
         //Guarda una medicion en el archivo
         public void GuardarMedicion(Medicion medicion)
         {
-            // 'using' asegura que el archivo se cierre correctamente, incluso si hay un error.
-            // 'StreamWriter' es la clase para escribir en archivos de texto.
+            // using asegura que el archivo se cierre correctamente
+            // StreamWriter para escribir en el archivo
             // FileMode.Append para agregar al final sin borrar lo anterior
             using (StreamWriter sw = new StreamWriter(_rutaArchivo, true))
             {
@@ -46,6 +46,42 @@ namespace TP_Final_POO
             }
 
             return mediciones;
+        }
+
+        public void EliminarMedicion(Guid idMedicion)
+        {
+            // Leemos todas las mediciones que existen en el archivo.
+            List<Medicion> todasLasMediciones = LeerTodasLasMediciones();
+
+            // Buscamos la medición específica que queremos eliminar.
+            Medicion medicionAEliminar = null; // La inicializamos en null.
+            foreach (Medicion medicion in todasLasMediciones)
+            {
+                // Si el ID de esta medición coincide con el que buscamos..
+                if (medicion.Id == idMedicion)
+                {
+                    medicionAEliminar = medicion; // la guardamos en nuestra variable
+                    break; // y salimos del bucle porque ya la encontramos.
+                }
+            }
+
+            // Si encontramos una medición para eliminar...
+            if (medicionAEliminar != null)
+            {
+                // La borramos de la lista que tenemos en memoria
+                todasLasMediciones.Remove(medicionAEliminar);
+
+                // preparamos una nueva lista de texto para reescribir el archivo.
+                List<string> lineasParaElArchivo = new List<string>();
+                foreach (Medicion medicion in todasLasMediciones)
+                {
+                    // Para cada medición que quedó, la convertimos a texto y la agregamos a la lista.
+                    lineasParaElArchivo.Add(medicion.ToCsv());
+                }
+
+                // sobrescribimos el archivo con las mediciones que quedaron.
+                File.WriteAllLines(_rutaArchivo, lineasParaElArchivo);
+            }
         }
     }
 }

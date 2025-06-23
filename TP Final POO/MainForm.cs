@@ -13,11 +13,16 @@ namespace TP_Final_POO
     public partial class MainForm : Form
     {
         private Usuario usuarioActual;
-        public MainForm(Usuario usuario)
+        private ServicioUsuarios _servicioUsuarios;
+        public MainForm(Usuario usuario, ServicioUsuarios servicio)
         {
             InitializeComponent();
             usuarioActual = usuario;
-            lblBienvenida.Text = $"Bienvenido/a {usuario.Nombre} - Rol: {usuario.RolUsuario}";
+            _servicioUsuarios = servicio;
+            lblBienvenida.Text = $"Bienvenido/a {usuario.NombreUsuario} - Rol: {usuario.ObtenerDescripcionRol()}";
+            // Hacemos visible el menú de admin solo si el usuario es de tipo Administrador.
+            adminToolStripMenuItem.Visible = usuarioActual is Administrador;
+            consultarMedicionesToolStripMenuItem.Visible = usuarioActual is Cliente;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -49,6 +54,12 @@ namespace TP_Final_POO
 
             ConsultarMedicion consultar = new ConsultarMedicion();
             consultar.Show();
+        }
+
+        private void gestionarClientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GestionUsuariosForm formGestion = new GestionUsuariosForm(_servicioUsuarios);
+            formGestion.ShowDialog(); 
         }
     }
 }

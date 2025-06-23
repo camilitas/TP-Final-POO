@@ -15,7 +15,6 @@ namespace TP_Final_POO
         private Usuario usuarioLogueado;
         private GestorDeDatos gestorDeDatos;
 
-        // Modificamos el constructor para recibir el usuario
         public RegistroMedicion(Usuario usuario)
         {
             InitializeComponent();
@@ -51,13 +50,13 @@ namespace TP_Final_POO
             }
 
             // Mostramos el nombre del responsable 
-            txtResponsable.Text = usuarioLogueado.Nombre;
+            txtResponsable.Text = usuarioLogueado.NombreUsuario;
 
             // Configuramos el DateTimePicker 
             dtpFechaHora.Format = DateTimePickerFormat.Custom;
             dtpFechaHora.CustomFormat = "dd/MM/yyyy HH:00";
 
-            // --- Cargar los datos existentes en el DataGridView ---
+            dgvMediciones.Columns["Eliminar"].Visible = usuarioLogueado is Administrador;
             CargarDatosEnGrid();
 
 
@@ -65,15 +64,15 @@ namespace TP_Final_POO
 
         private void CargarDatosEnGrid()
         {
-            // Leemos todas las mediciones del archivo CSV
+            
             List<Medicion> mediciones = gestorDeDatos.LeerTodasLasMediciones();
 
-            // Asignamos la lista de mediciones como la fuente de datos de la grilla
-            // El DataGridView creará las columnas automáticamente basándose en las propiedades de la clase Medicion
+            
+            // El DataGridView crea las columnas basándose en las propiedades de la clase Medicion
             dgvMediciones.DataSource = null; // Limpiamos la fuente de datos anterior
             dgvMediciones.DataSource = mediciones;
 
-            // Para Mejorar la apariencia de las columnas
+            
             if (dgvMediciones.Columns.Count > 0)
             {
                 dgvMediciones.Columns["Localidad"].HeaderText = "Localidad";
@@ -100,7 +99,7 @@ namespace TP_Final_POO
                 return;
             }
 
-            // --- INICIO: LÓGICA DE LA ALERTA ---
+            // Inicio alerta
 
             // Definimos un límite. Si la diferencia con la medición anterior supera esto, alertamos.
             const double LIMITE_ALERTA_MM = 100.0;
@@ -138,15 +137,15 @@ namespace TP_Final_POO
                     }
                 }
             }
-            // --- FIN: LÓGICA DE LA ALERTA ---
+            // Acá termina la alerta
 
 
-            // Si llegamos aquí, es porque la medición es normal o el usuario confirmó guardarla
+            // Si llegamos hasta acá, es porque la medición es normal o el usuario confirmó guardarla
             var nuevaMedicion = new Medicion(
                 localidad: localidadSeleccionada,
                 fechaHoraMedicion: dtpFechaHora.Value,
                 cantidadAgua: cantidadActual,
-                responsable: usuarioLogueado.Nombre
+                responsable: usuarioLogueado.NombreUsuario
             );
 
             try
@@ -177,6 +176,36 @@ namespace TP_Final_POO
 
         private void RegistroMedicion_FormClosed_1(object sender, FormClosedEventArgs e)
         {
+
+        }
+
+        private void dgvMediciones_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Verificamos que se hizo clic en una celda  de la columna Eliminar.
+            
+            if (e.RowIndex >= 0 && dgvMediciones.Columns[e.ColumnIndex].Name == "Eliminar")
+            {
+                // Pedimos confirmación para evitar borrados accidentales.
+                DialogResult respuesta = MessageBox.Show(
+                    "¿Está seguro de que desea eliminar esta medición?",
+                    "Confirmar Eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (respuesta == DialogResult.Yes)
+                {
+                    // Obtenemos el objeto Medicion completo de la fila en la que se hizo clic.
+                    Medicion medicionSeleccionada = (Medicion)dgvMediciones.Rows[e.RowIndex].DataBoundItem;
+
+                    // Llamamos al método del gestor para eliminarla usando su ID único.
+                    gestorDeDatos.EliminarMedicion(medicionSeleccionada.Id);
+
+                    // Recargamos el dgv para que se vea el cambio al instante.
+                    CargarDatosEnGrid();
+
+                    MessageBox.Show("Medición eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
 
         }
     }

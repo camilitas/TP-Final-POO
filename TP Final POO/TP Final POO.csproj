@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administrador.cs" />
+    <Compile Include="Cliente.cs" />
     <Compile Include="ConsultarMedicion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +55,12 @@
       <DependentUpon>ConsultarMedicion.cs</DependentUpon>
     </Compile>
     <Compile Include="Encriptador.cs" />
+    <Compile Include="GestionUsuariosForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GestionUsuariosForm.Designer.cs">
+      <DependentUpon>GestionUsuariosForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GestorDeDatos.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -81,8 +89,13 @@
     <Compile Include="RegistroMedicion.Designer.cs">
       <DependentUpon>RegistroMedicion.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServicioUsuarios.cs" />
+    <Compile Include="Usuario.cs" />
     <EmbeddedResource Include="ConsultarMedicion.resx">
       <DependentUpon>ConsultarMedicion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GestionUsuariosForm.resx">
+      <DependentUpon>GestionUsuariosForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
